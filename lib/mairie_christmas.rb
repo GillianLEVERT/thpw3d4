@@ -5,7 +5,7 @@ def source_main
     page = Nokogiri::HTML(URI.open("https://www.annuaire-des-mairies.com/val-d-oise.html"))
 end
 
-def get_townhall_email(townhall_url)
+def get_townhall_email(townhall_url) #on récupère tout les emails pour les mettres dans une array
     all_email_array = []
     townhall_url.each do |url|
         page = Nokogiri::HTML(URI.open("#{url}"))
@@ -16,7 +16,8 @@ def get_townhall_email(townhall_url)
     return all_email_array
 end
 
-def get_townhall_urls (page)
+
+def get_townhall_urls (page) #on récupère tout les liens pour les mettres des arrays
     scrap_url = page.xpath('//a[@class="lientxt"]')
     url_href_array = []
     url_array = []
@@ -26,10 +27,12 @@ def get_townhall_urls (page)
     end
     
     url_array = url_href_array.map {|href| "http://annuaire-des-mairies.com" + href[1..-1]}
-
+    
 end
 
-def get_townhall_name (page)
+
+
+def get_townhall_name (page) #on récupère les "names" pour les mettre dans une array
     all_name = page.xpath('//a[@class="lientxt"]')
     name_array = []
     
@@ -40,7 +43,7 @@ def get_townhall_name (page)
     return name_array
 end
 
-def perform
+def perform #méthode finale pour tout regrouper en rappelant les méthodes existantes.
     final_array = []
     
     urls = get_townhall_urls(source_main)
@@ -55,3 +58,5 @@ def perform
     final_array
 end
 
+#a enlever pour les essais.
+#print perform
